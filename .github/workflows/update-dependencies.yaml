@@ -54,6 +54,7 @@ jobs:
           cd ${{ github.workspace }}/core/src/main/golang/
           update-go-mod-replace ${{ github.workspace }}/core/src/foss/golang/clash/go.mod $(pwd)/go.mod
           go mod tidy
+          echo appid is ${{ secrets.MAINTAINER_APPID }
 
       - uses: tibdex/github-app-token@v2
         id: generate-token
