@@ -14,7 +14,7 @@ import (
 	"github.com/metacubex/mihomo/log"
 
 	"github.com/metacubex/mihomo/config"
-	_ "github.com/metacubex/mihomo/dns"
+	"github.com/metacubex/mihomo/dns"
 )
 
 var processors = []processor{
