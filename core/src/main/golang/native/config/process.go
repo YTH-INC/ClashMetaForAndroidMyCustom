@@ -42,7 +42,6 @@ func patchOverride(cfg *config.RawConfig, _ string) error {
 func patchGeneral(cfg *config.RawConfig, _ string) error {
 	cfg.Interface = ""
 	cfg.ExternalUI = ""
-	cfg.ExternalController = ""
 
 	return nil
 }
