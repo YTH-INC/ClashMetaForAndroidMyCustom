@@ -4,7 +4,6 @@ var (
 	defaultNameServers = []string{
 		"https://223.5.5.5/dns-query#h3=true",
 		"https://1.12.12.12/dns-query#h3=true",
-		"tcp://30.30.30.30",
 	}
 	defaultFakeIPFilter = []string{
 		// Stun Services
