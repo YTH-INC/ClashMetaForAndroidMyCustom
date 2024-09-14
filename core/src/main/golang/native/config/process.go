@@ -10,18 +10,19 @@ import (
 
 	"cfa/native/common"
 
+	"github.com/metacubex/mihomo/config"
 	C "github.com/metacubex/mihomo/constant"
 	"github.com/metacubex/mihomo/log"
-
-	"github.com/metacubex/mihomo/config"
-	"github.com/metacubex/mihomo/dns"
 )
 
 var processors = []processor{
+	patchExternalController, // must before patchOverride, so we only apply ExternalController in Override settings
 	patchOverride,
 	patchGeneral,
 	patchProfile,
 	patchDns,
+	patchTun,
+	patchListeners,
 	patchProviders,
 	validConfig,
 }
@@ -39,9 +40,19 @@ func patchOverride(cfg *config.RawConfig, _ string) error {
 	return nil
 }
 
-func patchGeneral(cfg *config.RawConfig, _ string) error {
+func patchExternalController(cfg *config.RawConfig, _ string) error {
+	cfg.ExternalController = ""
+	cfg.ExternalControllerTLS = ""
+
+	return nil
+}
+
+func patchGeneral(cfg *config.RawConfig, profileDir string) error {
 	cfg.Interface = ""
-	cfg.ExternalUI = ""
+	cfg.RoutingMark = 0
+	if cfg.ExternalController != "" || cfg.ExternalControllerTLS != "" {
+		cfg.ExternalUI = profileDir + "/ui"
+	}
 
 	return nil
 }
@@ -58,7 +69,7 @@ func patchDns(cfg *config.RawConfig, _ string) error {
 		cfg.DNS = config.RawDNS{
 			Enable:            true,
 			UseHosts:          true,
-			DefaultNameserver: []string{"223.5.5.5"},
+			DefaultNameserver: defaultNameServers,
 			NameServer:        defaultNameServers,
 			EnhancedMode:      C.DNSFakeIP,
 			FakeIPRange:       defaultFakeIPRange,
@@ -69,9 +80,31 @@ func patchDns(cfg *config.RawConfig, _ string) error {
 	}
 
 	if cfg.ClashForAndroid.AppendSystemDNS {
-		cfg.DNS.NameServer = append(cfg.DNS.NameServer, "dhcp://"+dns.SystemDNSPlaceholder)
+		cfg.DNS.NameServer = append(cfg.DNS.NameServer, "system://")
 	}
 
+	return nil
+}
+
+func patchTun(cfg *config.RawConfig, _ string) error {
+	cfg.Tun.Enable = false
+	cfg.Tun.AutoRoute = false
+	cfg.Tun.AutoDetectInterface = false
+	return nil
+}
+
+func patchListeners(cfg *config.RawConfig, _ string) error {
+	newListeners := make([]map[string]any, 0, len(cfg.Listeners))
+	for _, mapping := range cfg.Listeners {
+		if proxyType, existType := mapping["type"].(string); existType {
+			switch proxyType {
+			case "tproxy", "redir", "tun":
+				continue // remove those listeners which is not supported
+			}
+		}
+		newListeners = append(newListeners, mapping)
+	}
+	cfg.Listeners = newListeners
 	return nil
 }
 

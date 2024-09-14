@@ -6,7 +6,6 @@
     <string name="access_control_packages">访问控制应用包列表</string>
     <string name="append_system_dns">追加系统 DNS</string>
     <string name="application_broken">应用损坏</string>
-    <string name="application_name">Clash Meta for Android</string>
     <string name="auto_update">自动更新</string>
     <string name="behavior">行为</string>
     <string name="bypass_private_network">绕过私有网络</string>
@@ -43,7 +42,6 @@
     <string name="import_from_url">从 URL 导入</string>
     <string name="interface_">界面</string>
     <string name="invalid_url">无效的 URL</string>
-    <string name="launch_name">Clash Meta</string>
     <string name="logcat">Logcat</string>
     <string name="logs">日志</string>
     <string name="mode">模式</string>
@@ -127,11 +125,14 @@
     <string name="fallback">Fallback Name Server</string>
     <string name="default_name_server">Default Name Server</string>
     <string name="fakeip_filter">FakeIP 过滤器</string>
+    <string name="fakeip_filter_mode">FakeIP 过滤器模式</string>
     <string name="geoip_fallback">GeoIP Fallback</string>
     <string name="ipcidr_fallback">IPCIDR Fallback</string>
     <string name="use_built_in">使用内置</string>
     <string name="mapping">Real-IP 至 域名映射</string>
     <string name="fakeip">Fake-IP 至 域名映射</string>
+    <string name="blacklist">黑名单</string>
+    <string name="whitelist">白名单</string>
     <string name="off">OFF</string>
     <string name="strict">Strict</string>
     <string name="always">Always</string>
@@ -176,8 +177,6 @@
     <string name="format_fetching_provider">正在下载外部资源 %s</string>
     <string name="initializing">正在初始化</string>
     <string name="verifying">正在校验</string>
-    <string name="sideload_geoip">旁加载 GEOIP</string>
-    <string name="sideload_geoip_summary">外部 GEOIP 数据库</string>
     <string name="force_enable">强制启用</string>
     <string name="document">文档</string>
     <string name="clash_wiki">Clash Wiki</string>
@@ -217,6 +216,8 @@
     <string name="geoip_fallback_code">GeoIP Fallback 区域代码</string>
     <string name="allow_bypass">允许应用绕过</string>
     <string name="allow_bypass_summary">允许其他应用绕过 VPN</string>
+    <string name="allow_ipv6">允许Ipv6</string>
+    <string name="allow_ipv6_summary">通过 VpnService 代理Ipv6流量</string>
     <string name="clash_meta_wiki">Clash Meta Wiki</string>
     <string name="meta_features">Meta Features</string>
     <string name="unified_delay">Unified Delay</string>
